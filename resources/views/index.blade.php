@@ -5,6 +5,7 @@
 @foreach ($products as $product)
 <div class="card mx-3 my-3" style="width: 18rem;">
 
+
 	@if ($product->image)
 		<img src="/storage/images/{{$product->image}}" class="card-img-top" alt="Product">
 	@else
@@ -14,9 +15,10 @@
   <div class="card-body">
     <h5 class="card-title">{{$product->name}}</h5>
     <p class="card-text">{{$product->description}}</p>
+	<p class="card-text">{{$product->category->name}}</p>
 	<h6 class="card-title">Stock (disponibles): {{$product->stock}}</h6>
 	<h6 class="card-title">$ {{$product->price}}</h6>
-    <a href="#" class="btn btn-primary">Añadir al carrito</a>
+    <a href="{{route('getproductdetail',['product' => $product->id ])}}" class="btn btn-outline-dark">See more...</a>
   </div>
 </div>
 @endforeach

@@ -16,7 +16,14 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('showCart') }}">cart<a>
+                        </li>
+
+
                         <!-- Authentication Links -->
+
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
@@ -37,9 +44,11 @@
 
 								<div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 									<!-- users -->
+									@role('admin')
                                     <a class="dropdown-item" href="{{ route('users') }}">Usuarios</a>
 									<!-- productos -->
                                     <a class="dropdown-item" href="{{ route('products') }}">Productos</a>
+									@endrole
 									<!-- cerrar sesion -->
 									<a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();document.getElementById('logout-form').

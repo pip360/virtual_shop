@@ -1,4 +1,4 @@
-	<form>
+<form>
 	@role('admin')
 	<div class="mb-3">
 		<!-- role -->
@@ -90,7 +90,7 @@
 		</div>
 
 		<!-- buttons -->
-		<a href="/Users" class="btn btn-danger me-2">Cancelar</a>
+		<a href="/" class="btn btn-danger me-2">Cancelar</a>
 		<button type="submit" class="btn btn-primary ">Enviar</button>
 
 	</form>

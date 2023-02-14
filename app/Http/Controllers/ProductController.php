@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
@@ -23,6 +24,28 @@ class ProductController extends Controller
 	{
 		$products = Product::get();
 		return response()->json(['products' => $products], 200);
+	}
+
+	public function getAllProductsForDataTable()
+	{
+		$products = Product::with('category');
+		return DataTables::of($products)
+		->addColumn('action',  function ($row){
+			return "<a
+			href='#'
+			onclick='event.preventDefault();'
+			data-id='{$row->id}'
+			role='edit'
+			class='btn btn-warning btn-sm'>Edit</a>
+			<a
+			href='#'
+			onclick='event.preventDefault();'
+			data-id='{$row->id}'
+			role='delete'
+			class='btn btn-danger btn-sm'>Delete</a>";
+		})
+		->rawColumns(['action'])
+		->make();
 	}
 
 	public function getAProduct(Product $product)
@@ -62,5 +85,12 @@ class ProductController extends Controller
 		$request->image->move(storage_path('app/public/images'), $image_name);
 		$product->image = $image_name;
 	}
+
+	public function getProductDetail(Product $product)
+    {
+        // $product->load('Category');
+        // $product = Product::get();
+        return view('productdetail.ProductDetail', compact('product'));
+    }
 
 }

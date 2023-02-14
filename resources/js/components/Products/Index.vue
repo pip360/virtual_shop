@@ -7,15 +7,7 @@
 			</div>
 
 			<div class="card-body">
-			    <section class="table-responsive" v-if="products.length> 0">
-					 <table-component :products_data="products"/>
-				</section>
-				<!-- loading -->
-				<section v-else class="d-flex justify-content-center my-3">
-					<div class="spinner-border" role="status">
- 						<span class="visually-hidden">Loading...</span>
-					</div>
-				</section>
+				<table-component ref="table"/>
 			</div>
 			<section v-if="load_modal">
 				<modal :product_data="product"/>
@@ -35,30 +27,12 @@ export default {
 	},
 	data(){
 		return{
-			products: [],
-			load:false,
 			load_modal:false,
 			modal: null,
 			product: null
 		}
 	},
-	created() {
-		this.index()
-	},
 	methods: {
-		async index() {
-			await this.getProducts()
-		},
-		async getProducts(){
-			try {
-				this.load = false
-				const { data }  = await axios.get('Products/GetAllProducts')
-				this.products = data.products
-				this.load = true
-			} catch (error) {
-				console.error(error)
-			}
-		},
 		openModal(){
 			this.load_modal = true
 			setTimeout(() => {
@@ -76,7 +50,8 @@ export default {
 		},
 		closeModal(){
 			this.modal.hide()
-			this.getProducts()
+			this.$refs.table.datatable.destroy()
+			this.$refs.table.index()
 		},
 		editProduct(product){
 			this.product = product

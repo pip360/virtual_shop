@@ -3,15 +3,18 @@
 	<div class="card my-5">
 
 		<div class="card-header d-flex justify-content-between">
+			{{-- @section('css')
+			<link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
+			@endsection --}}
 			<h2>Usuarios</h2>
 			<a href="{{route('user.create')}}" class="btn btn-primary">Crear Usuario</a>
 		</div>
 			<div class="card-body">
-				<table class="table my-4 mx-3">
+				<table id="usuarios" class="table my-4 mx-3">
 					<thead>
 						<tr>
 							<th scope="col">id</th>
-							<th scope="col">CC</th>
+							<th scope="col">Numero de identificacion</th>
 							<th scope="col">Nombre</th>
 							<th scope="col">Apellido</th>
 							<th scope="col">Email</th>
@@ -38,6 +41,20 @@
 					@endforeach
 					</tbody>
 				</table>
+				{{-- @section('js')
+				<script src="
+				https://code.jquery.com/jquery-3.5.1.js
+				"></script>
+				<script src="
+				https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js
+				"></script>
+				<script src="
+				https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js
+				"></script>
+				<script>$(document).ready(function () {
+					$('#usuarios').DataTable();
+				});</script>
+				@endsection --}}
 			</div>
 
 	</div>

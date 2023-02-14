@@ -1,54 +1,81 @@
 <template>
-	<table class="table">
+	<table class="table" id="productTable" @click="getEvent">
 		<thead>
 			<tr>
 				<th>Nombre</th>
 				<!-- <th>Descripción</th> -->
+				<th>Categoria</th>
 				<th>Stock</th>
-				<th>Price</th>
+				<!--  <th>Price</th> -->
 				<th>Acciones</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="(product, index) in products" :key="index">
-				<td>{{product.name}}</td>
-				<!-- <td>{{product.description}}</td> -->
-				<td>{{product.stock}}</td>
-				<td>{{product.price}}</td>
-				<td>
-					<button class="btn btn-warning me-2 btn-sm" @click="getProduct(product)">Editar</button>
-					<button class="btn btn-danger btn-sm" @click="deleteProduct(product)">Eliminar</button>
-				</td>
-			</tr>
+
 		</tbody>
 	</table>
 </template>
 
 <script>
 export default {
-	props:['products_data'],
 	data() {
 		return {
 			products: [],
-
+			datatable: {}
 		}
 	},
-	created() {
+	mounted() {
 		this.index()
 	},
 	methods:{
-		index(){
-			this.products = [...this.products_data]
+		async index(){
+			this.mountDataTable()
 		},
-		async getProduct(product){
+		mountDataTable(){
+			this.datatable = $('#productTable').DataTable({
+				processing: true,
+				serverSide: true,
+				ajax:{
+					url:'/Products/GetAllProductsDataTable'
+				},
+				columns:[
+					{data: 'name'},
+					{data: 'category.name', searchable: false },
+					{data: 'stock'},
+					{data: 'action'}
+
+				]
+			})
+		},
+		async getProducts(){
 			try {
-			// const { data } = await axios.get(`Products/GetAProduct/${product.id}`)
-			this.$parent.editProduct(product)
+				this.load = false
+				const { data }  = await axios.get('Products/GetAllProducts')
+				this.products = data.products
+				this.load = true
+			} catch (error) {
+				console.error(error)
+			}
+			this.mountDataTable()
+		},
+		getEvent(event) {
+				const button = event.target
+				if (button.getAttribute('role') == 'edit') {
+					this.getProduct(button.getAttribute('data-id'))
+				}
+				if (button.getAttribute('role') == 'delete') {
+					this.deleteProduct(button.getAttribute('data-id'))
+				}
+			},
+		async getProduct(product_id){
+			try {
+			const { data } = await axios.get(`Products/GetAProduct/${product_id}`)
+			this.$parent.editProduct(data.product)
 			} catch (error) {
 				console.error(error)
 			}
 		},
-		async deleteProduct(product){
+		async deleteProduct(product_id){
 			try {
 				 const result = await swal.fire({
 					icon: 'info',
@@ -56,10 +83,10 @@ export default {
 					showCancelButton: true,
 					confirmButtonText: 'Eliminar',
 				})
-					if (!result.isConfirmed) return
-
-			await axios.delete(`Products/DeleteAProduct/${product.id}`)
-			this.$parent.getProducts()
+				if (!result.isConfirmed) return
+				this.datatable.destroy()
+				await axios.delete(`Products/DeleteAProduct/${product_id}`)
+				this.index()
 				swal.fire({
 							icon: 'success',
 							title: 'Felicidades!',

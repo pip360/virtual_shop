@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\User;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
@@ -11,30 +14,48 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
 
+Route::get('/test', function(){
+	/* $users = User::get();
+	foreach ($users as $user) {
+		if($user->number_id == 1000862550) $user->assignRole('admin');
+		else $user->assignRole('user');
+	} */
+	/* Role::create(['name' => 'user']); */
+	/* return Role::all()->pluck('name'); */
+});
+
 Route::view('/','home');
 
 Route::get('/', [ProductController::class, 'showHomeWithProducts'])->name('home');
 
 
 // users
-Route::group(['prefix' => 'Users','controller' => UserController::class], function() {
+Route::group(['prefix' => 'Users',
+'controller' => UserController::class], function() {
+	Route::post('/CreateUser', 'createUser')->name('user.create.post');
+});
+
+Route::group(['prefix' => 'Users', 'middleware' => ['auth', 'role:admin'],
+'controller' => UserController::class], function() {
 	Route::get('/', 'showAllUsers')->name('users');
 	Route::get('/CreateUser', 'showCreateUser')->name('user.create');
 	Route::get('/EditUser/{user}', 'showEditUser')->name('user.edit');
-
-	Route::post('/CreateUser', 'createUser')->name('user.create.post');
 	Route::put('/EditUser{user}', 'updateUser')->name('user.edit.put');
 	Route::delete('/DeleteUser{user}', 'deleteUser')->name('user.delete');
 });
 
+
 // products
-Route::group(['prefix' => 'Products','controller' => ProductController::class], function() {
-	Route::get('/', 'showProducts')->name('products');
-	Route::get('/GetAllProducts', 'getAllProducts');
-	Route::get('/GetAProduct/{product}', 'getAProduct');
-	Route::post('/SaveProduct', 'saveProduct');
-	Route::post('/UpdateProduct/{product}', 'updateProduct');
-	Route::delete('/DeleteAProduct/{product}', 'deleteProduct');
+Route::group(['prefix' => 'Products', 'middleware' => ['auth','role:admin'], 'controller' => ProductController::class],
+		function() {
+		Route::get('/', 'showProducts')->name('products');
+		Route::get('/GetAllProducts', 'getAllProducts');
+		Route::get('/GetAllProductsDataTable', 'getAllProductsForDataTable');
+		Route::get('/GetAProduct/{product}', 'getAProduct');
+		Route::post('/SaveProduct', 'saveProduct');
+		Route::post('/UpdateProduct/{product}', 'updateProduct');
+		Route::delete('/DeleteAProduct/{product}', 'deleteProduct');
+
 });
 
 // categories
@@ -89,4 +110,13 @@ Route::group(['controller' => VerificationController::class], function() {
 		->name('verification.verify');
 	Route::post('email/resend', 'resend')
 		->name('verification.resend');
+});
+
+Route::get('/getProductDetail/{product}', [ProductController::class, 'getProductDetail'])->name('getproductdetail');
+
+Route::group(['prefix' => 'Cart', 'middleware' => ['auth','role:admin'], 'controller' => CartController::class],
+		function() {
+		Route::get('/', 'showCart')->name('showCart');
+
+
 });
