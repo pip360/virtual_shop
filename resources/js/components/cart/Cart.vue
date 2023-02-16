@@ -1,7 +1,7 @@
 <template>
 	<div class="text-center d-flex justify-content-between m-4">
 		<div>
-			<a href="/" class="btn btn-outline-success">Back To Store</a>
+			<a href="/" class="btn btn-primary ">Regresar</a>
 		</div>
 	</div>
 
@@ -9,11 +9,11 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th scope="col">Image</th>
-					<th scope="col">Title</th>
-					<th scope="col">Stock</th>
-					<th scope="col">Price</th>
-					<th scope="col">Action</th>
+					<th>Image</th>
+					<th>Nombre</th>
+					<th>Stock</th>
+					<th>Precio</th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>

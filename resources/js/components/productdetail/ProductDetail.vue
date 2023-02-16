@@ -2,8 +2,13 @@
 <section class="d-flex justify-content-center flex-wrap">
 
 <div class="card mx-3 my-3" style="width: 18rem;">
-<img src="/storage/images/{{product->image}}" class="card-img-top" alt="Product">
-  <div class="card-body">
+
+	
+	<div class="card-body">
+		
+		<img src="/storage/images/product.image" class="card-img-top">
+		
+	
     <h5 class="card-title">{{product.name}}</h5>
     <p class="card-text">{{product.description}}</p>
 	<p class="card-text">{{product.category}}</p>
