@@ -14,6 +14,36 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
 
+//Categories
+Route::group(['prefix' => 'Categories','controller' => CategoryController::class], function()
+{
+		Route::get('/', 'showCategories')->name('categories');
+
+		Route::get('/GetAllCategories', 'getAllCategories');
+
+		Route::get('/GetACategory/{category}', 'getACategory');
+
+		Route::post('/SaveCategory', 'saveCategory');
+
+		Route::post('/UpdateCategory/{category}', 'updateCategory');
+
+		Route::delete('/DeleteACategory/{category}', 'deleteCategory');
+
+		Route::get('/GetAllCategoriesDataTable', 'getAllCategoriesForDataTable');
+
+});
+
+Route::get('/', [CategoryController::class, 'showHomeWithCategories']);
+
+
+Route::group(['prefix' => 'CategoriesView', 'controller' => CategoryController::class], function () {
+	Route::get('/', 'categoriesView')->name('categoriesview.index');
+
+	Route::get('/GetAllCategoriesWithProducts', 'getAllCategoriesWithProducts');
+
+	Route::get('/GetACategoryWithProduct/{category}', 'getACategoryWithProduct')->name('categoriesview.index');
+});
+
 Route::get('/test', function(){
 	/* $users = User::get();
 	foreach ($users as $user) {
@@ -24,10 +54,10 @@ Route::get('/test', function(){
 	/* return Role::all()->pluck('name'); */
 });
 
-Route::view('/','home');
+/* Route::view('/','home'); */
 
-Route::get('/', [ProductController::class, 'showHomeWithProducts'])->name('home');
-
+/* Route::get('/', [ProductController::class, 'showHomeWithProducts'])->name('home');
+ */
 
 // users
 Route::group(['prefix' => 'Users',

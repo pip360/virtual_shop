@@ -1,9 +1,10 @@
-<x-app tittle="Technologies Shop">
+<x-app tittle="TechShop | Tienda Virtual">
+
 
 {{-- cart --}}
 @if (count(Cart::content()))
-	<div class="col-sm-3">
-		<p class="text-center">Cart</p>
+	<div class="col-sm-3 ms-auto">
+		<p class="text-center me-1">Carrito</p>
 		<thead>
 			<td>Producto</td>
 		</thead>
@@ -14,9 +15,9 @@
 					<td>{{$item->qty}} x {{$item->price}}</td>
 					<td>{{number_format($item->qty * $item->price,2)}}</td>
 					<td><a href="/eliminaritem/{{$item->rowId}}" class="text-danger">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-						<path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-						</svg>
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+							<path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+						  </svg>
 					</a></td>
 				</tr>
 			@endforeach
@@ -24,7 +25,7 @@
 			<tr><td colspan="4"><p class="text-end m-0 p-0">IVA 19% {{Cart::tax()}}</p></td></tr>
 			<tr><td colspan="4"><p class="text-end m-0 p-0">Total COP ${{Cart::total()}}</p></td></tr>
 		</table>
-		<p class="text-center"><a href="/showcart" class="btn btn-outline-success btn-sm">Show Cart</a></p>
+		<p class="text-center"><a href="/showcart" class="btn btn-outline-success btn-sm">Ver carrito</a></p>
 	</div>
 @endif
 
@@ -56,7 +57,7 @@
 <!-- A Product -->
 <section class="d-flex justify-content-center flex-wrap">
 
-@foreach ($products as $product)
+{{-- @foreach ($products as $product)
 
 <div class="card mx-3 my-3" style="width: 18rem;">
 	<div>
@@ -70,29 +71,58 @@
 		</div>
 
 		<div class="card-body">
-			<h5 class="card-title">{{$product->name}}</h5>
-			{{-- <p class="card-text">{{$product->description}}</p> --}}
+			<h4 class="card-title">{{$product->name}}</h4>
+
 			<p class="card-text">{{$product->category->name}}</p>
-			{{-- <h6 class="card-title">Stock (disponibles): {{$product->stock}}</h6> --}}
-			<h6 class="card-text">$ {{$product->price}}</h6>
+
+			<h6 class="card-text">$ {{number_format($product->price)}}</h6>
 			<a href="{{route('getproductdetail',['product' => $product->id ])}}" type="submit" class="btn btn-primary d-flex justify-content-between">Ver</a>
 			@auth
 			<div class="mt-2 d-flex justify-content-between">
 				<form action="{{route('additem')}}" method="post">
 					@csrf
-					{{-- @if ($product->price->count())
-						<input type="hidden" name="precio_id" id="precio_{{$product->id}}" value="{{$product->price[0]->id}}">
-					@endif --}}
+
 					<input type="hidden" name="precio_id" value="{{$product->price}}">
 					<input type="hidden" name="producto_id" value="{{$product->id}}">
-					<input type="submit" value="Agregar" class="btn btn-success w-100">
+					<input type="submit" value="Agregar al carrito" class="btn btn-success w-100 d-flex justify-content-between">
 				</form>
 			</div>
 			@endauth
 		</div>
   	</div>
 </div>
-@endforeach
+@endforeach --}}
+
+@foreach ($categories as $category)
+	 {{--@dd($categories)--}}
+	 @if (count($category->product) > 0)
+	 <div class="mx-5  d-flex">
+	 <h4>{{ $category->name }}</h4>
+	 <a class="text-decoration-none mt-1 mb-2 mx-2" href="{{ route('categoriesview.index', ['category' => $category]) }}" class="card-title text-uppercase">
+					View all Products
+				</a>
+			</div>
+            <section class="d-flex justify-content-center flex-wrap text-center">
+					<?php $count = 0; ?>
+                        @foreach ($category->product as $count=>$product)
+						@break($count == 4)
+                            <div class="card mx-2 mb-5 shadow" style="width: 16rem;">
+                                @if ($product->image)
+                                    <img src="/storage/images/{{ $product->image }}" style="height:230px;">
+                                @else
+                                    <img src="https://http2.mlstatic.com/D_NQ_NP_913067-MCO53666208687_022023-W.webp" alt="product-image">
+                                @endif
+                                <div class="card-body">
+                                    <strong class="card-text">{{ $product->name }}</strong> <br>
+                                    <strong class="text-success ">$ {{ $product->price }}</strong> <br>
+
+                                </div>
+                            </div>
+                        @endforeach
+            </section>
+			@endif
+
+    @endforeach
 
 </section>
 

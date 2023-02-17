@@ -7,8 +7,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{$tittle ?? 'Technologies Shop'}}</title>
-
+    <title>{{$tittle ?? 'TechShop | Tienda Virtual'}}</title>
+	<link rel="icon" href="storage/images/hand-index-thumb.svg" type="image/svg">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">

@@ -15,9 +15,9 @@ class ProductController extends Controller
 	}
 
     function showHomeWithProducts() {
-		$products = $this->getAllProducts()->original['products'];
+		$products = Product::with('category')->get();
+        return view('index', compact('product'));
 
-		return view('index', compact('products'));
 	}
 
 	public function getAllProducts()
