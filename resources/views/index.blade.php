@@ -4,13 +4,20 @@
 @if (count(Cart::content()))
 	<div class="col-sm-3">
 		<p class="text-center">Cart</p>
+		<thead>
+			<td>Producto</td>
+		</thead>
 		<table class="table table-striped">
 			@foreach (Cart::content() as $item)
 				<tr>
 					<td>{{$item->name}}</td>
 					<td>{{$item->qty}} x {{$item->price}}</td>
 					<td>{{number_format($item->qty * $item->price,2)}}</td>
-					<td>x</td>
+					<td><a href="/eliminaritem/{{$item->rowId}}" class="text-danger">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+						<path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+						</svg>
+					</a></td>
 				</tr>
 			@endforeach
 			<tr><td colspan="4"><p class="text-end m-0 p-0">Subtotal COP ${{Cart::subtotal()}}</p></td></tr>

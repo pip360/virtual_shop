@@ -117,6 +117,10 @@ Route::get('/getProductDetail/{product}', [ProductController::class, 'getProduct
 //cart
 Route::post('/additem', [App\Http\Controllers\CartController::class, 'addItem'])->name("additem");
 Route::get('/showcart', [App\Http\Controllers\CartController::class, 'showCart'])->name("showcart");
+Route::get('/incrementar/{id}', [App\Http\Controllers\CartController::class, 'incrementarCantidad'])->name("incrementarcantidad");
+Route::get('/decrementar/{id}', [App\Http\Controllers\CartController::class, 'decrementarCantidad'])->name("decrementarcantidad");
+Route::get('/eliminaritem/{id}', [App\Http\Controllers\CartController::class, 'eliminarItem'])->name("eliminaritem");
+Route::get('/eliminarcarrito', [App\Http\Controllers\CartController::class, 'eliminarCarrito'])->name("eliminarcarrito");
 
 
 
