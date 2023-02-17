@@ -9,6 +9,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+	
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
@@ -22,7 +24,9 @@
 <!-- main -->
        <main class="py-4">
             @yield('content')
+			
         </main>
     </div>
+	
 </body>
 </html>

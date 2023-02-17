@@ -96,33 +96,50 @@
 @foreach ($categories as $category)
 	 {{--@dd($categories)--}}
 	 @if (count($category->product) > 0)
-	 <div class="mx-5  d-flex">
-	 <h4>{{ $category->name }}</h4>
+	 <div class="mx-5  d-flex mt-4">
+	 <h2>{{ $category->name }}</h2>
 	 <a class="text-decoration-none mt-1 mb-2 mx-2" href="{{ route('categoriesview.index', ['category' => $category]) }}" class="card-title text-uppercase">
-					View all Products
+					Ver productos todos los productos
 				</a>
 			</div>
-            <section class="d-flex justify-content-center flex-wrap text-center">
+            <section class="d-flex justify-content-center flex-wrap text-center mt-4">
 					<?php $count = 0; ?>
                         @foreach ($category->product as $count=>$product)
 						@break($count == 4)
-                            <div class="card mx-2 mb-5 shadow" style="width: 16rem;">
+                            <div class="card mx-2 mb-5 shadow mt-3" style="width: 16rem;">
+								
                                 @if ($product->image)
                                     <img src="/storage/images/{{ $product->image }}" style="height:230px;">
                                 @else
-                                    <img src="https://http2.mlstatic.com/D_NQ_NP_913067-MCO53666208687_022023-W.webp" alt="product-image">
+                                    <img src="https://static.vecteezy.com/system/resources/thumbnails/003/399/468/small/modern-flat-design-of-jpg-file-icon-for-web-free-vector.jpg" alt="product-image">
                                 @endif
                                 <div class="card-body">
-                                    <strong class="card-text">{{ $product->name }}</strong> <br>
-                                    <strong class="text-success ">$ {{ $product->price }}</strong> <br>
-
+                                    <h4 class="card-text">{{ $product->name }}</h4> <br>
+                                    <p>Precio: $ {{number_format($product->price),2}}</p> <br>
+								
+								<div class="mt-2 d-flex justify-content-between">
+								<form action="{{route('additem')}}" method="post">
+								@csrf
+								<a href="{{route('getproductdetail',['product' => $product->id ])}}" type="submit" class="btn btn-primary d-flex justify-content-between">Detalles</a>
+								@auth
+								<div class="auth">
+								<input type="hidden" name="precio_id" value="{{$product->price}}">
+									<input type="hidden" name="producto_id" value="{{$product->id}}">
+									<input type="submit" value="Agregar al carrito" class="btn btn-success w-100 d-flex justify-content-between mt-2">
+								</div>
+								@endauth	
+								</form>
+								
+								</div>
+								
+								
                                 </div>
-                            </div>
-                        @endforeach
-            </section>
-			@endif
+                            	</div>
+                        		@endforeach
+            					</section> <br>
+								@endif
 
-    @endforeach
+@endforeach
 
 </section>
 

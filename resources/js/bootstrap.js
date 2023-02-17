@@ -2,7 +2,7 @@ import _ from 'lodash';
 import * as bootstrap from 'bootstrap';
 import axios from 'axios';
 import swal from 'sweetalert2';
-import jquery from 'jquery'
+import jquery from 'jquery';
 import 'datatables.net-bs5'
 
 window.$ = jquery

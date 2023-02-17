@@ -15,7 +15,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
 
 //Categories
-Route::group(['prefix' => 'Categories','controller' => CategoryController::class], function()
+Route::group(['prefix' => 'Categories', 'middleware' => ['auth','role:admin'],'controller' => CategoryController::class], function()
 {
 		Route::get('/', 'showCategories')->name('categories');
 

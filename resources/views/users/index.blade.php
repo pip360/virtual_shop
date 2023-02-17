@@ -1,16 +1,19 @@
 <x-app>
+{{-- @section('css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
+@endsection --}}
+@livewireStyles
+	<link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
 <section class="container">
 	<div class="card my-5">
 
 		<div class="card-header d-flex justify-content-between">
-			{{-- @section('css')
-			<link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
-			@endsection --}}
 			<h2>Usuarios</h2>
 			<a href="{{route('user.create')}}" class="btn btn-primary">Crear Usuario</a>
 		</div>
 			<div class="card-body">
-				<table id="usuarios" class="table my-4 mx-3">
+				<table class="table my-4 mx-3" id="User" >
 					<thead>
 						<tr>
 							<th scope="col">id</th>
@@ -41,22 +44,24 @@
 					@endforeach
 					</tbody>
 				</table>
+				<livewire:datatable
+		model="App\Models\User"
+		searchable="name"
+	>
+	@livewireScripts
 				{{-- @section('js')
-				<script src="
-				https://code.jquery.com/jquery-3.5.1.js
-				"></script>
-				<script src="
-				https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js
-				"></script>
-				<script src="
-				https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js
-				"></script>
-				<script>$(document).ready(function () {
-					$('#usuarios').DataTable();
-				});</script>
+				<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+				<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+				<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+				<script>
+					$(document).ready(function () {
+    				$('#usuarios').DataTable();
+					});
+				</script>
 				@endsection --}}
 			</div>
 
 	</div>
 </section>
+
 </x-app>

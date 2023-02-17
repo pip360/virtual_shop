@@ -26,7 +26,11 @@
 	<p class="text-center"><a href="/showcart" class="btn btn-outline-success btn-sm">Ver carrito</a></p>
 </div>
 @endif
-
+<div class="my-3">
+	<a href="/" ><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="ms-2 bi bi-house" viewBox="0 0 16 16">
+<path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
+</svg></a>
+</div>
 	<section class="d-flex justify-content-center flex-wrap">
 
 
@@ -38,15 +42,15 @@
 				@if ($product->image)
 				<img src="/storage/images/{{$product->image}}" class="card-img-top" alt="Product" width="100">
 				@else
-				<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDsRxTnsSBMmVvRxdygcb9ue6xfUYL58YX27JLNLohHQ&s" class="card-img-top" alt="Product">
+				<img src="https://static.vecteezy.com/system/resources/thumbnails/003/399/468/small/modern-flat-design-of-jpg-file-icon-for-web-free-vector.jpg" class="card-img-top" alt="Product">
 				@endif
 				</div>
 
 				<div class="card-body">
 					<h3 class="card-title">{{$product->name}}</h3>
 					<h5 class="card-text">{{$product->description}}</h5>
-					<p class="card-text">{{$product->category->name}}</p>
-					<h6 class="card-title">Stock (disponibles): {{$product->stock}}</h6>
+					<p class="card-text">Categoria: {{$product->category->name}}</p>
+					<h6 class="card-title">Stock: {{$product->stock}}</h6>
 					<h5 class="card-text">$ {{number_format($product->price)}}</h5>
 					@auth
 					<div class="mt-2 d-flex justify-content-between">
