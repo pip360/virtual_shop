@@ -114,9 +114,9 @@ Route::group(['controller' => VerificationController::class], function() {
 
 Route::get('/getProductDetail/{product}', [ProductController::class, 'getProductDetail'])->name('getproductdetail');
 
-Route::group(['prefix' => 'Cart', 'middleware' => ['auth','role:admin|user'], 'controller' => CartController::class],
-		function() {
-		Route::get('/', 'showCart')->name('showCart');
+//cart
+Route::post('/additem', [App\Http\Controllers\CartController::class, 'addItem'])->name("additem");
+Route::get('/showcart', [App\Http\Controllers\CartController::class, 'showCart'])->name("showcart");
 
 
-});
+

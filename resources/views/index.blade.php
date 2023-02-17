@@ -1,4 +1,26 @@
 <x-app tittle="Technologies Shop">
+
+{{-- cart --}}
+@if (count(Cart::content()))
+	<div class="col-sm-3">
+		<p class="text-center">Cart</p>
+		<table class="table table-striped">
+			@foreach (Cart::content() as $item)
+				<tr>
+					<td>{{$item->name}}</td>
+					<td>{{$item->qty}} x {{$item->price}}</td>
+					<td>{{number_format($item->qty * $item->price,2)}}</td>
+					<td>x</td>
+				</tr>
+			@endforeach
+			<tr><td colspan="4"><p class="text-end m-0 p-0">Subtotal COP ${{Cart::subtotal()}}</p></td></tr>
+			<tr><td colspan="4"><p class="text-end m-0 p-0">IVA 19% {{Cart::tax()}}</p></td></tr>
+			<tr><td colspan="4"><p class="text-end m-0 p-0">Total COP ${{Cart::total()}}</p></td></tr>
+		</table>
+		<p class="text-center"><a href="/showcart" class="btn btn-outline-success btn-sm">Show Cart</a></p>
+	</div>
+@endif
+
 {{-- Carousel --}}
 <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true">
 	<div class="carousel-inner">
@@ -26,26 +48,45 @@
   </div>
 <!-- A Product -->
 <section class="d-flex justify-content-center flex-wrap">
+
 @foreach ($products as $product)
+
 <div class="card mx-3 my-3" style="width: 18rem;">
+	<div>
+		<div class="card-img-top">
 
-
-	@if ($product->image)
-		<img src="/storage/images/{{$product->image}}" class="card-img-top" alt="Product">
-	@else
+		@if ($product->image)
+		<img src="/storage/images/{{$product->image}}" class="card-img-top" alt="Product" width="100">
+		@else
 		<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDsRxTnsSBMmVvRxdygcb9ue6xfUYL58YX27JLNLohHQ&s" class="card-img-top" alt="Product">
-	@endif
+		@endif
+		</div>
 
-  <div class="card-body">
-    <h5 class="card-title">{{$product->name}}</h5>
-    <p class="card-text">{{$product->description}}</p>
-	<p class="card-text">{{$product->category->name}}</p>
-	<h6 class="card-title">Stock (disponibles): {{$product->stock}}</h6>
-	<h6 class="card-title">$ {{$product->price}}</h6>
-    <a href="{{route('getproductdetail',['product' => $product->id ])}}" type="submit" class="btn btn-primary d-flex justify-content-between">Ver</a>
-  </div>
+		<div class="card-body">
+			<h5 class="card-title">{{$product->name}}</h5>
+			{{-- <p class="card-text">{{$product->description}}</p> --}}
+			<p class="card-text">{{$product->category->name}}</p>
+			{{-- <h6 class="card-title">Stock (disponibles): {{$product->stock}}</h6> --}}
+			<h6 class="card-text">$ {{$product->price}}</h6>
+			<a href="{{route('getproductdetail',['product' => $product->id ])}}" type="submit" class="btn btn-primary d-flex justify-content-between">Ver</a>
+			@auth
+			<div class="mt-2 d-flex justify-content-between">
+				<form action="{{route('additem')}}" method="post">
+					@csrf
+					{{-- @if ($product->price->count())
+						<input type="hidden" name="precio_id" id="precio_{{$product->id}}" value="{{$product->price[0]->id}}">
+					@endif --}}
+					<input type="hidden" name="precio_id" value="{{$product->price}}">
+					<input type="hidden" name="producto_id" value="{{$product->id}}">
+					<input type="submit" value="Agregar" class="btn btn-success w-100">
+				</form>
+			</div>
+			@endauth
+		</div>
+  	</div>
 </div>
 @endforeach
+
 </section>
 
 </x-app>
