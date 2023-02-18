@@ -33,16 +33,16 @@
 <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true">
 	<div class="carousel-inner">
 	  <div class="carousel-item active">
-		<img src="https://teknopolis.vtexassets.com/assets/vtex.file-manager-graphql/images/6b94c7eb-5c35-4774-b69f-15bfd8191010___b75d5ed9cd6558d8a18062a77f775558.png" class="d-block w-100" alt="...">
+		<a href="/getProductDetail/57"> <img src="https://teknopolis.vtexassets.com/assets/vtex.file-manager-graphql/images/6b94c7eb-5c35-4774-b69f-15bfd8191010___b75d5ed9cd6558d8a18062a77f775558.png" class="d-block w-100" alt="..."></a>
 	  </div>
 	  <div class="carousel-item">
-		<img src="https://teknopolis.vtexassets.com/assets/vtex.file-manager-graphql/images/95b2fe4d-1e05-4adf-94ef-a82b7458f5e1___86f5635e2918503375b5b01d8cb4a0bb.jpg" class="d-block w-100" alt="...">
+		<a href="/getProductDetail/72"> <img src="https://teknopolis.vtexassets.com/assets/vtex.file-manager-graphql/images/95b2fe4d-1e05-4adf-94ef-a82b7458f5e1___86f5635e2918503375b5b01d8cb4a0bb.jpg" class="d-block w-100" alt="..."></a>
 	  </div>
 	  <div class="carousel-item">
-		<img src="https://teknopolis.vtexassets.com/assets/vtex.file-manager-graphql/images/97f4136a-6c71-45b2-9bdb-ac00574f8afc___317a71b47ae38eb2c4e4c2c856a65acc.jpg" class="d-block w-100" alt="...">
+		<a href="/getProductDetail/73"> <img src="https://teknopolis.vtexassets.com/assets/vtex.file-manager-graphql/images/97f4136a-6c71-45b2-9bdb-ac00574f8afc___317a71b47ae38eb2c4e4c2c856a65acc.jpg" class="d-block w-100" alt="..."> </a>
 	  </div>
 	  <div class="carousel-item">
-		<img src="https://teknopolis.vtexassets.com/assets/vtex.file-manager-graphql/images/4e33b21b-3109-447d-9530-ec37532e7de0___a648ba6f2740a0d66d4cddb0d73850c2.png" class="d-block w-100" alt="...">
+		<a href="/CategoriesView/GetACategoryWithProduct/1"> <img src="https://teknopolis.vtexassets.com/assets/vtex.file-manager-graphql/images/4e33b21b-3109-447d-9530-ec37532e7de0___a648ba6f2740a0d66d4cddb0d73850c2.png" class="d-block w-100" alt="..."></a>
 	  </div>
 	</div>
 	<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
@@ -57,41 +57,6 @@
 <!-- A Product -->
 <section class="d-flex justify-content-center flex-wrap">
 
-{{-- @foreach ($products as $product)
-
-<div class="card mx-3 my-3" style="width: 18rem;">
-	<div>
-		<div class="card-img-top">
-
-		@if ($product->image)
-		<img src="/storage/images/{{$product->image}}" class="card-img-top" alt="Product" width="100">
-		@else
-		<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDsRxTnsSBMmVvRxdygcb9ue6xfUYL58YX27JLNLohHQ&s" class="card-img-top" alt="Product">
-		@endif
-		</div>
-
-		<div class="card-body">
-			<h4 class="card-title">{{$product->name}}</h4>
-
-			<p class="card-text">{{$product->category->name}}</p>
-
-			<h6 class="card-text">$ {{number_format($product->price)}}</h6>
-			<a href="{{route('getproductdetail',['product' => $product->id ])}}" type="submit" class="btn btn-primary d-flex justify-content-between">Ver</a>
-			@auth
-			<div class="mt-2 d-flex justify-content-between">
-				<form action="{{route('additem')}}" method="post">
-					@csrf
-
-					<input type="hidden" name="precio_id" value="{{$product->price}}">
-					<input type="hidden" name="producto_id" value="{{$product->id}}">
-					<input type="submit" value="Agregar al carrito" class="btn btn-success w-100 d-flex justify-content-between">
-				</form>
-			</div>
-			@endauth
-		</div>
-  	</div>
-</div>
-@endforeach --}}
 
 @foreach ($categories as $category)
 	 {{--@dd($categories)--}}
@@ -107,7 +72,7 @@
                         @foreach ($category->product as $count=>$product)
 						@break($count == 4)
                             <div class="card mx-2 mb-5 shadow mt-3" style="width: 16rem;">
-								
+
                                 @if ($product->image)
                                     <img src="/storage/images/{{ $product->image }}" style="height:230px;">
                                 @else
@@ -116,7 +81,7 @@
                                 <div class="card-body">
                                     <h4 class="card-text">{{ $product->name }}</h4> <br>
                                     <p>Precio: $ {{number_format($product->price),2}}</p> <br>
-								
+
 								<div class="mt-2 d-flex justify-content-between">
 								<form action="{{route('additem')}}" method="post">
 								@csrf
@@ -127,12 +92,12 @@
 									<input type="hidden" name="producto_id" value="{{$product->id}}">
 									<input type="submit" value="Agregar al carrito" class="btn btn-success w-100 d-flex justify-content-between mt-2">
 								</div>
-								@endauth	
+								@endauth
 								</form>
-								
+
 								</div>
-								
-								
+
+
                                 </div>
                             	</div>
                         		@endforeach
